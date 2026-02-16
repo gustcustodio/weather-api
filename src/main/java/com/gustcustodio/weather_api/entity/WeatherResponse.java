@@ -1,4 +1,6 @@
 package com.gustcustodio.weather_api.entity;
 
-public record WeatherResponse(String city, double temp, String description) {
+import java.io.Serializable;
+
+public record WeatherResponse(String city, double temp, String description) implements Serializable {
 }
