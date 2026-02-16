@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.time.Duration;
 import java.util.Map;
 
@@ -41,13 +42,18 @@ public class WeatherService {
 
         WeatherResponse weather = new WeatherResponse(
                 city,
-                (double) currentConditions.get("temp"),
+                fahrenheitToCelsius((double) currentConditions.get("temp")),
                 (String) currentConditions.get("conditions")
         );
 
         redisTemplate.opsForValue().set(cacheKey, weather, Duration.ofHours(12));
 
         return weather;
+    }
+
+    public static Double fahrenheitToCelsius(double fahrenheit) {
+        DecimalFormat df = new DecimalFormat("##");
+        return Double.valueOf(df.format(((fahrenheit - 32) / 1.8)));
     }
 
 }
