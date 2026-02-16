@@ -2,6 +2,7 @@ package com.gustcustodio.weather_api.controller;
 
 import com.gustcustodio.weather_api.entity.WeatherResponse;
 import com.gustcustodio.weather_api.service.WeatherService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,9 @@ public class WeatherController {
     }
 
     @GetMapping("/{city}")
-    public WeatherResponse getWeather(@PathVariable String city) {
-        return weatherService.getWeather(city);
+    public ResponseEntity<WeatherResponse> getWeather(@PathVariable String city) {
+        WeatherResponse weatherResponse = weatherService.getWeather(city);
+        return ResponseEntity.ok(weatherResponse);
     }
 
 }
